@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- ===== 添加到桌面的图标（SVG内联） ===== -->
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000000'/%3E%3Ctext x='256' y='200' text-anchor='middle' font-family='Georgia, serif' font-size='96' font-weight='300' fill='%23ffffff' letter-spacing='8'%3E三径%3C/text%3E%3Ctext x='256' y='285' text-anchor='middle' font-family='Georgia, serif' font-size='32' font-weight='200' fill='%23aaaaaa' letter-spacing='6'%3Esanjing%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000000'/%3E%3Ctext x='256' y='200' text-anchor='middle' font-family='Georgia, serif' font-size='96' font-weight='300' fill='%23ffffff' letter-spacing='8'%3E三径%3C/text%3E%3Ctext x='256' y='285' text-anchor='middle' font-family='Georgia, serif' font-size='32' font-weight='200' fill='%23aaaaaa' letter-spacing='6'%3Esanjing%3C/text%3E%3C/svg%3E" />
+
+  <!-- ===== PWA 配置（添加到主屏幕后全屏运行） ===== -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="三径" />
+  <meta name="theme-color" content="#000000" />
+
   <title>三径 · 私人音乐</title>
   <style>
     * {
@@ -597,6 +608,28 @@
       opacity: 0;
     }
 
+    /* ===== 音频加载错误提示 ===== */
+    #audio-error {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(180, 80, 80, 0.15);
+      font-size: 14px;
+      letter-spacing: 2px;
+      font-family: sans-serif;
+      pointer-events: none;
+      z-index: 30;
+      opacity: 0;
+      transition: opacity 1s ease;
+      text-align: center;
+      line-height: 2;
+    }
+
+    #audio-error.show {
+      opacity: 1;
+    }
+
     @media (max-width: 600px) {
       #record-wrapper {
         width: 340px;
@@ -770,6 +803,8 @@
 
     <div id="milestone-text"></div>
 
+    <div id="audio-error"></div>
+
     <div id="swipe-hint">〈  〉</div>
 
     <div id="record-wrapper">
@@ -817,7 +852,6 @@
   <script>
     // =============================================
     // 音乐数据（2 首，每首 20 分钟）
-    // 不自动切换，需用户手动滑动换歌
     // =============================================
     const MONTHLY_TRACKS = [
       { 
@@ -846,6 +880,7 @@
     let lastMilestone = 0;
 
     let cosmicTimeout = null;
+    let audioErrorEl = document.getElementById('audio-error');
 
     let startX = 0;
     let currentX = 0;
@@ -1034,6 +1069,9 @@
       }
     }
 
+    // =============================================
+    // 加载歌曲
+    // =============================================
     function loadTrack(index, animate = true) {
       const track = MONTHLY_TRACKS[index];
       if (!track) return;
@@ -1041,6 +1079,18 @@
       audio.src = track.url;
       audio.volume = volumeLevel;
       audio.loop = false;
+
+      // 监听加载错误
+      audio.onerror = function() {
+        audioErrorEl.textContent = '⚠️ 音乐文件加载失败\n请检查 music/ 文件夹是否有 track-01.mp3 和 track-02.mp3';
+        audioErrorEl.classList.add('show');
+        console.error('❌ 音频加载失败:', track.url);
+      };
+
+      audio.oncanplaythrough = function() {
+        audioErrorEl.classList.remove('show');
+        console.log('✅ 音频加载成功:', track.url);
+      };
 
       trackIndexEl.textContent = `${index + 1} / ${MONTHLY_TRACKS.length}`;
       trackNameEl.textContent = track.title;
@@ -1050,9 +1100,12 @@
 
       resetTimer();
 
-      if (!isPlaying) {
-        audio.play().catch(() => {});
-        isPlaying = true;
+      // 如果当前是播放状态，自动播放
+      if (isPlaying) {
+        audio.play().catch((e) => {
+          console.log('⚠️ 自动播放被阻止，等待用户手势');
+          // iOS 需要用户手势，这里不处理，用户点击时会触发
+        });
         startTimer();
         record.style.animationPlayState = 'running';
       }
@@ -1067,9 +1120,34 @@
       }
     }
 
+    // =============================================
+    // 播放/暂停（核心修复：用户手势激活音频）
+    // =============================================
+    function togglePlay() {
+      if (isPlaying) {
+        // 暂停
+        audio.pause();
+        isPlaying = false;
+        stopTimer();
+        record.style.animationPlayState = 'paused';
+      } else {
+        // 播放 - 用用户手势激活
+        audio.play().then(() => {
+          isPlaying = true;
+          startTimer();
+          record.style.animationPlayState = 'running';
+          audioErrorEl.classList.remove('show');
+          console.log('▶️ 播放成功');
+        }).catch((e) => {
+          console.log('⚠️ 播放失败:', e.message);
+          audioErrorEl.textContent = '⚠️ 无法播放音乐，请检查文件是否存在';
+          audioErrorEl.classList.add('show');
+        });
+      }
+    }
+
     function goToNext() {
       if (MONTHLY_TRACKS.length === 0) return;
-      // 如果已经在最后一首，不循环
       if (currentIndex >= MONTHLY_TRACKS.length - 1) return;
       
       audio.pause();
@@ -1077,11 +1155,15 @@
       stopTimer();
       currentIndex++;
       loadTrack(currentIndex, true);
+      // 自动播放
+      audio.play().catch(() => {});
+      isPlaying = true;
+      startTimer();
+      record.style.animationPlayState = 'running';
     }
 
     function goToPrev() {
       if (MONTHLY_TRACKS.length === 0) return;
-      // 如果已经在第一首，不循环
       if (currentIndex <= 0) return;
       
       audio.pause();
@@ -1089,20 +1171,10 @@
       stopTimer();
       currentIndex--;
       loadTrack(currentIndex, true);
-    }
-
-    function togglePlay() {
-      if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
-        stopTimer();
-        record.style.animationPlayState = 'paused';
-      } else {
-        audio.play().catch(() => {});
-        isPlaying = true;
-        startTimer();
-        record.style.animationPlayState = 'running';
-      }
+      audio.play().catch(() => {});
+      isPlaying = true;
+      startTimer();
+      record.style.animationPlayState = 'running';
     }
 
     // =============================================
@@ -1117,7 +1189,7 @@
     });
 
     // =============================================
-    // 滑动换歌（不循环，到边界即停止）
+    // 滑动换歌
     // =============================================
     wrapper.addEventListener('touchstart', function(e) {
       hasSwiped = false;
@@ -1148,7 +1220,6 @@
       const delta = currentX - startX;
       
       if (delta < -SWIPE_THRESHOLD) {
-        // 左滑 → 下一首（边界限制）
         if (currentIndex < MONTHLY_TRACKS.length - 1) {
           wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(-40px) rotate(-2deg)';
@@ -1159,13 +1230,11 @@
             record.style.transform = 'rotate(0deg)';
           }, 300);
         } else {
-          // 已是最后一首，弹回
           wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
         }
       } else if (delta > SWIPE_THRESHOLD) {
-        // 右滑 → 上一首（边界限制）
         if (currentIndex > 0) {
           wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(40px) rotate(2deg)';
@@ -1176,7 +1245,6 @@
             record.style.transform = 'rotate(0deg)';
           }, 300);
         } else {
-          // 已是第一首，弹回
           wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
@@ -1269,11 +1337,9 @@
     // 音乐播放结束 → 自动暂停（不自动切歌）
     // =============================================
     audio.addEventListener('ended', function() {
-      // 音乐结束，自动暂停
       isPlaying = false;
       stopTimer();
       record.style.animationPlayState = 'paused';
-      // 显示歌名和出处（提醒用户当前歌曲已播完）
       trackNameEl.classList.add('show');
       trackSourceEl.classList.add('show');
       console.log('🎵 音乐播放结束，已自动暂停');
@@ -1287,6 +1353,9 @@
       timerEl.classList.add('paused');
       record.style.animationPlayState = 'paused';
     }
+
+    console.log('📱 三径 · 私人音乐已加载');
+    console.log('🎵 请点击屏幕播放音乐');
   </script>
 </body>
 </html>

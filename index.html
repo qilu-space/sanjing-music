@@ -4,11 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <!-- ===== 添加到桌面的图标（SVG内联） ===== -->
   <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000000'/%3E%3Ctext x='256' y='200' text-anchor='middle' font-family='Georgia, serif' font-size='96' font-weight='300' fill='%23ffffff' letter-spacing='8'%3E三径%3C/text%3E%3Ctext x='256' y='285' text-anchor='middle' font-family='Georgia, serif' font-size='32' font-weight='200' fill='%23aaaaaa' letter-spacing='6'%3Esanjing%3C/text%3E%3C/svg%3E" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23000000'/%3E%3Ctext x='256' y='200' text-anchor='middle' font-family='Georgia, serif' font-size='96' font-weight='300' fill='%23ffffff' letter-spacing='8'%3E三径%3C/text%3E%3Ctext x='256' y='285' text-anchor='middle' font-family='Georgia, serif' font-size='32' font-weight='200' fill='%23aaaaaa' letter-spacing='6'%3Esanjing%3C/text%3E%3C/svg%3E" />
 
-  <!-- ===== PWA 配置（添加到主屏幕后全屏运行） ===== -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="三径" />
@@ -16,12 +14,7 @@
 
   <title>三径 · 私人音乐</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #f5f3f0;
       min-height: 100vh;
@@ -33,7 +26,6 @@
       user-select: none;
       overflow: hidden;
     }
-
     #app {
       width: 100vw;
       height: 100vh;
@@ -47,11 +39,7 @@
       cursor: pointer;
       transition: background 1.8s ease;
     }
-
-    #app.cosmic-mode {
-      background: #050505 !important;
-    }
-
+    #app.cosmic-mode { background: #050505 !important; }
     #texture {
       position: absolute;
       top: 0;
@@ -61,28 +49,14 @@
       pointer-events: none;
       opacity: 0.15;
       background-image: 
-        linear-gradient(rgba(180, 170, 160, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(180, 170, 160, 0.08) 1px, transparent 1px),
-        repeating-linear-gradient(45deg, 
-          transparent 0px, 
-          transparent 80px, 
-          rgba(160, 150, 140, 0.03) 80px, 
-          rgba(160, 150, 140, 0.03) 81px
-        ),
-        repeating-linear-gradient(-45deg, 
-          transparent 0px, 
-          transparent 80px, 
-          rgba(160, 150, 140, 0.03) 80px, 
-          rgba(160, 150, 140, 0.03) 81px
-        );
+        linear-gradient(rgba(180,170,160,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180,170,160,0.08) 1px, transparent 1px),
+        repeating-linear-gradient(45deg, transparent 0px, transparent 80px, rgba(160,150,140,0.03) 80px, rgba(160,150,140,0.03) 81px),
+        repeating-linear-gradient(-45deg, transparent 0px, transparent 80px, rgba(160,150,140,0.03) 80px, rgba(160,150,140,0.03) 81px);
       background-size: 40px 40px, 40px 40px, 160px 160px, 160px 160px;
       transition: opacity 1.8s ease;
     }
-
-    #app.cosmic-mode #texture {
-      opacity: 0.35;
-    }
-
+    #app.cosmic-mode #texture { opacity: 0.35; }
     #texture::after {
       content: '';
       position: absolute;
@@ -91,22 +65,19 @@
       width: 100%;
       height: 100%;
       background-image: 
-        radial-gradient(1px 1px at 10% 20%, rgba(140, 130, 120, 0.15), transparent),
-        radial-gradient(1px 1px at 30% 60%, rgba(140, 130, 120, 0.1), transparent),
-        radial-gradient(1.5px 1.5px at 55% 15%, rgba(140, 130, 120, 0.12), transparent),
-        radial-gradient(1px 1px at 70% 80%, rgba(140, 130, 120, 0.08), transparent),
-        radial-gradient(1px 1px at 85% 40%, rgba(140, 130, 120, 0.1), transparent),
-        radial-gradient(1.2px 1.2px at 15% 85%, rgba(140, 130, 120, 0.06), transparent),
-        radial-gradient(1px 1px at 45% 45%, rgba(140, 130, 120, 0.04), transparent),
-        radial-gradient(1px 1px at 92% 10%, rgba(140, 130, 120, 0.07), transparent),
-        radial-gradient(0.8px 0.8px at 5% 50%, rgba(140, 130, 120, 0.09), transparent),
-        radial-gradient(1px 1px at 60% 92%, rgba(140, 130, 120, 0.05), transparent);
+        radial-gradient(1px 1px at 10% 20%, rgba(140,130,120,0.15), transparent),
+        radial-gradient(1px 1px at 30% 60%, rgba(140,130,120,0.1), transparent),
+        radial-gradient(1.5px 1.5px at 55% 15%, rgba(140,130,120,0.12), transparent),
+        radial-gradient(1px 1px at 70% 80%, rgba(140,130,120,0.08), transparent),
+        radial-gradient(1px 1px at 85% 40%, rgba(140,130,120,0.1), transparent),
+        radial-gradient(1.2px 1.2px at 15% 85%, rgba(140,130,120,0.06), transparent),
+        radial-gradient(1px 1px at 45% 45%, rgba(140,130,120,0.04), transparent),
+        radial-gradient(1px 1px at 92% 10%, rgba(140,130,120,0.07), transparent),
+        radial-gradient(0.8px 0.8px at 5% 50%, rgba(140,130,120,0.09), transparent),
+        radial-gradient(1px 1px at 60% 92%, rgba(140,130,120,0.05), transparent);
       transition: opacity 1.8s ease;
     }
-
-    #app.cosmic-mode #texture::after {
-      opacity: 0.6;
-    }
+    #app.cosmic-mode #texture::after { opacity: 0.6; }
 
     #cosmic-lines {
       position: absolute;
@@ -119,17 +90,12 @@
       opacity: 0;
       transition: opacity 2s ease;
     }
-
-    #app.cosmic-mode #cosmic-lines {
-      opacity: 1;
-    }
-
+    #app.cosmic-mode #cosmic-lines { opacity: 1; }
     #cosmic-lines svg {
       width: 100%;
       height: 100%;
       animation: rotate-cosmic 40s linear infinite;
     }
-
     @keyframes rotate-cosmic {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -146,32 +112,19 @@
       opacity: 0;
       transition: opacity 2.5s ease;
     }
-
-    #app.cosmic-mode #cosmic-dots {
-      opacity: 0.8;
-    }
-
+    #app.cosmic-mode #cosmic-dots { opacity: 0.8; }
     .dot-particle {
       position: absolute;
       width: 2px;
       height: 2px;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255,255,255,0.6);
       border-radius: 50%;
       animation: drift-particle 8s linear infinite;
     }
-
     @keyframes drift-particle {
-      0% {
-        transform: translate(0, 0);
-        opacity: 0.1;
-      }
-      50% {
-        opacity: 0.9;
-      }
-      100% {
-        transform: translate(var(--dx), var(--dy));
-        opacity: 0.1;
-      }
+      0% { transform: translate(0,0); opacity: 0.1; }
+      50% { opacity: 0.9; }
+      100% { transform: translate(var(--dx), var(--dy)); opacity: 0.1; }
     }
 
     #record-wrapper {
@@ -184,53 +137,27 @@
       z-index: 5;
       pointer-events: auto;
     }
-
-    #app.cosmic-mode #record-wrapper {
-      opacity: 0.6;
-    }
-
-    #record-wrapper:active {
-      cursor: grabbing;
-    }
-
-    #record-wrapper.swiping {
-      transition: none;
-    }
+    #app.cosmic-mode #record-wrapper { opacity: 0.6; }
+    #record-wrapper:active { cursor: grabbing; }
+    #record-wrapper.swiping { transition: none; }
 
     #record {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: radial-gradient(
-        ellipse at 30% 35%,
-        #4a4540 0%,
-        #1a1816 40%,
-        #0d0c0a 70%,
-        #050505 100%
-      );
-      box-shadow: 
-        0 30px 100px rgba(0, 0, 0, 0.1),
-        0 0 0 1.5px rgba(180, 170, 160, 0.12),
-        inset 0 0 80px rgba(0, 0, 0, 0.2),
-        inset 0 0 160px rgba(0, 0, 0, 0.1);
+      background: radial-gradient(ellipse at 30% 35%, #4a4540 0%, #1a1816 40%, #0d0c0a 70%, #050505 100%);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.1), 0 0 0 1.5px rgba(180,170,160,0.12), inset 0 0 80px rgba(0,0,0,0.2), inset 0 0 160px rgba(0,0,0,0.1);
       animation: spin-record 18s linear infinite;
       animation-play-state: paused;
       position: relative;
     }
-
     #app.cosmic-mode #record {
-      box-shadow: 
-        0 30px 100px rgba(255, 255, 255, 0.03),
-        0 0 0 1.5px rgba(255, 255, 255, 0.05),
-        inset 0 0 80px rgba(0, 0, 0, 0.4),
-        inset 0 0 160px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 30px 100px rgba(255,255,255,0.03), 0 0 0 1.5px rgba(255,255,255,0.05), inset 0 0 80px rgba(0,0,0,0.4), inset 0 0 160px rgba(0,0,0,0.2);
     }
-
     @keyframes spin-record {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     #record::before {
       content: '';
       position: absolute;
@@ -239,15 +166,9 @@
       width: 76%;
       height: 76%;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 
-        inset 0 0 0 10px rgba(255, 255, 255, 0.01),
-        inset 0 0 0 28px rgba(255, 255, 255, 0.005),
-        inset 0 0 0 55px rgba(255, 255, 255, 0.01),
-        inset 0 0 0 80px rgba(255, 255, 255, 0.005),
-        inset 0 0 0 110px rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255,255,255,0.02);
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,0.01), inset 0 0 0 28px rgba(255,255,255,0.005), inset 0 0 0 55px rgba(255,255,255,0.01), inset 0 0 0 80px rgba(255,255,255,0.005), inset 0 0 0 110px rgba(255,255,255,0.01);
     }
-
     #record-shine {
       position: absolute;
       top: -8%;
@@ -256,13 +177,8 @@
       height: 116%;
       border-radius: 50%;
       pointer-events: none;
-      background: radial-gradient(
-        ellipse at 20% 20%,
-        rgba(255, 255, 255, 0.04) 0%,
-        transparent 60%
-      );
+      background: radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.04) 0%, transparent 60%);
     }
-
     #progress-ring {
       position: absolute;
       top: -16px;
@@ -272,19 +188,14 @@
       border-radius: 50%;
       pointer-events: none;
     }
-
-    #progress-ring svg {
-      transform: rotate(-90deg);
-    }
-
+    #progress-ring svg { transform: rotate(-90deg); }
     #progress-ring circle {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.04);
+      stroke: rgba(255,255,255,0.04);
       stroke-width: 1.2;
     }
-
     #progress-ring .progress-circle {
-      stroke: rgba(255, 255, 255, 0.12);
+      stroke: rgba(255,255,255,0.12);
       stroke-dasharray: 1370;
       stroke-dashoffset: 1370;
       transition: stroke-dashoffset 0.8s ease;
@@ -299,17 +210,14 @@
       height: 110px;
       border-radius: 50%;
       background: radial-gradient(ellipse at 35% 30%, #f5f0ea, #d5cfc7);
-      box-shadow: 
-        inset 0 2px 10px rgba(255, 255, 255, 0.3),
-        inset 0 -4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: inset 0 2px 10px rgba(255,255,255,0.3), inset 0 -4px 20px rgba(0,0,0,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.1);
       pointer-events: none;
     }
-
     #record-label::before {
       content: '';
       position: absolute;
@@ -322,18 +230,16 @@
       background: radial-gradient(circle at 40% 35%, #3a3836, #0a0908);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
     }
-
     #label-text {
       font-size: 12px;
       letter-spacing: 6px;
-      color: rgba(80, 75, 70, 0.35);
+      color: rgba(80,75,70,0.35);
       font-weight: 300;
       text-transform: uppercase;
       margin-top: -8px;
       font-family: "Georgia", serif;
       text-align: center;
     }
-
     #label-text small {
       display: block;
       font-size: 7px;
@@ -355,46 +261,34 @@
       justify-content: center;
       flex-direction: column;
     }
-
     #timer {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255,255,255,0.8);
       font-size: 96px;
       font-weight: 200;
       letter-spacing: 12px;
       font-family: "Georgia", "Times New Roman", serif;
-      text-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+      text-shadow: 0 0 60px rgba(255,255,255,0.03);
       line-height: 1;
       transition: opacity 1.2s ease;
       pointer-events: none;
       background: transparent;
     }
-
-    #timer.paused {
-      opacity: 0.2;
-    }
-
-    #timer.completed {
-      opacity: 0.06 !important;
-    }
-
+    #timer.paused { opacity: 0.2; }
+    #timer.completed { opacity: 0.06 !important; }
     #timer-dots {
       margin-top: 24px;
       display: flex;
       gap: 10px;
       pointer-events: none;
     }
-
     .dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       transition: background 0.8s ease, transform 0.8s ease;
     }
-
-    .dot.filled {
-      background: rgba(255, 255, 255, 0.25);
-    }
+    .dot.filled { background: rgba(255,255,255,0.25); }
 
     #tonearm {
       position: absolute;
@@ -402,13 +296,12 @@
       right: -6%;
       width: 150px;
       height: 2.5px;
-      background: linear-gradient(to right, rgba(180, 170, 160, 0.05), rgba(180, 170, 160, 0.12));
+      background: linear-gradient(to right, rgba(180,170,160,0.05), rgba(180,170,160,0.12));
       transform: rotate(25deg);
       transform-origin: right center;
       border-radius: 2px;
       pointer-events: none;
     }
-
     #tonearm::after {
       content: '';
       position: absolute;
@@ -417,7 +310,7 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: rgba(180, 170, 160, 0.08);
+      background: rgba(180,170,160,0.08);
     }
 
     #info {
@@ -427,27 +320,22 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      color: rgba(120, 110, 100, 0.2);
+      color: rgba(120,110,100,0.2);
       font-size: 14px;
       letter-spacing: 4px;
       transition: opacity 1.8s ease;
       pointer-events: none;
       z-index: 5;
     }
-
-    #app.cosmic-mode #info {
-      opacity: 0.2;
-    }
-
+    #app.cosmic-mode #info { opacity: 0.2; }
     #track-index {
       font-size: 11px;
       opacity: 0.15;
       letter-spacing: 3px;
     }
-
     #track-name {
       font-size: 18px;
-      color: rgba(80, 75, 70, 0.25);
+      color: rgba(80,75,70,0.25);
       transition: opacity 2s ease;
       letter-spacing: 3px;
       font-weight: 300;
@@ -455,30 +343,23 @@
       max-width: 80vw;
       line-height: 1.5;
     }
-
-    #track-name.show {
-      opacity: 0.45;
-    }
-
+    #track-name.show { opacity: 0.45; }
     #track-source {
       font-size: 11px;
-      color: rgba(80, 75, 70, 0.12);
+      color: rgba(80,75,70,0.12);
       letter-spacing: 2px;
       font-weight: 300;
       margin-top: 2px;
       transition: opacity 2s ease;
     }
-
-    #track-source.show {
-      opacity: 0.25;
-    }
+    #track-source.show { opacity: 0.25; }
 
     #swipe-hint {
       position: absolute;
       bottom: 26%;
       display: flex;
       gap: 50px;
-      color: rgba(120, 110, 100, 0.03);
+      color: rgba(120,110,100,0.03);
       font-size: 28px;
       letter-spacing: 12px;
       pointer-events: none;
@@ -486,15 +367,12 @@
       z-index: 5;
       transition: opacity 1.8s ease;
     }
-
-    #app.cosmic-mode #swipe-hint {
-      opacity: 0.05;
-    }
+    #app.cosmic-mode #swipe-hint { opacity: 0.05; }
 
     #help-tip {
       position: absolute;
       bottom: 3.5%;
-      color: rgba(120, 110, 100, 0.04);
+      color: rgba(120,110,100,0.04);
       font-size: 11px;
       letter-spacing: 2px;
       font-family: sans-serif;
@@ -503,10 +381,7 @@
       z-index: 5;
       transition: opacity 1.8s ease;
     }
-
-    #app.cosmic-mode #help-tip {
-      opacity: 0.05;
-    }
+    #app.cosmic-mode #help-tip { opacity: 0.05; }
 
     #ripple-container {
       position: absolute;
@@ -518,7 +393,6 @@
       z-index: 20;
       overflow: hidden;
     }
-
     .ripple {
       position: absolute;
       top: 50%;
@@ -526,26 +400,14 @@
       width: 0;
       height: 0;
       border-radius: 50%;
-      border: 2px solid rgba(180, 170, 160, 0.12);
+      border: 2px solid rgba(180,170,160,0.12);
       transform: translate(-50%, -50%);
       animation: ripple-expand 3.5s ease-out forwards;
     }
-
     @keyframes ripple-expand {
-      0% {
-        width: 0;
-        height: 0;
-        opacity: 1;
-        border-width: 3px;
-      }
-      100% {
-        width: 900px;
-        height: 900px;
-        opacity: 0;
-        border-width: 0.5px;
-      }
+      0% { width: 0; height: 0; opacity: 1; border-width: 3px; }
+      100% { width: 900px; height: 900px; opacity: 0; border-width: 0.5px; }
     }
-
     .ripple.delay-1 { animation-delay: 0.3s; }
     .ripple.delay-2 { animation-delay: 0.6s; }
     .ripple.delay-3 { animation-delay: 0.9s; }
@@ -559,29 +421,19 @@
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(204, 180, 150, 0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(204,180,150,0.1) 0%, transparent 70%);
       pointer-events: none;
       z-index: 15;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-
     #pulse-glow.active {
       animation: glow-pulse 1.5s ease-out forwards;
     }
-
     @keyframes glow-pulse {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-      }
-      25% {
-        opacity: 0.6;
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(4);
-      }
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      25% { opacity: 0.6; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(4); }
     }
 
     #milestone-text {
@@ -589,7 +441,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: rgba(80, 75, 70, 0);
+      color: rgba(80,75,70,0);
       font-size: 28px;
       letter-spacing: 8px;
       font-weight: 200;
@@ -599,159 +451,63 @@
       font-family: "Georgia", serif;
       opacity: 0;
     }
+    #milestone-text.show { opacity: 0.2; }
+    #milestone-text.hide { opacity: 0; }
 
-    #milestone-text.show {
-      opacity: 0.2;
-    }
-
-    #milestone-text.hide {
-      opacity: 0;
-    }
-
-    /* ===== 音频加载错误提示 ===== */
     #audio-error {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: rgba(180, 80, 80, 0.15);
-      font-size: 14px;
-      letter-spacing: 2px;
+      bottom: 22%;
+      color: rgba(180,80,80,0.25);
+      font-size: 13px;
+      letter-spacing: 1px;
       font-family: sans-serif;
       pointer-events: none;
       z-index: 30;
       opacity: 0;
       transition: opacity 1s ease;
       text-align: center;
-      line-height: 2;
+      line-height: 1.8;
+      max-width: 80vw;
     }
-
-    #audio-error.show {
-      opacity: 1;
-    }
+    #audio-error.show { opacity: 1; }
 
     @media (max-width: 600px) {
-      #record-wrapper {
-        width: 340px;
-        height: 340px;
-      }
-      #timer {
-        font-size: 72px;
-        letter-spacing: 8px;
-      }
-      #record-label {
-        width: 85px;
-        height: 85px;
-      }
-      #label-text {
-        font-size: 10px;
-        letter-spacing: 4px;
-      }
-      #label-text small {
-        font-size: 6px;
-        letter-spacing: 3px;
-      }
-      #record-label::before {
-        width: 8px;
-        height: 8px;
-      }
-      #track-name {
-        font-size: 15px;
-        letter-spacing: 2px;
-      }
-      #track-source {
-        font-size: 10px;
-      }
-      #timer-dots {
-        gap: 8px;
-      }
-      .dot {
-        width: 6px;
-        height: 6px;
-      }
-      #progress-ring circle {
-        stroke-width: 1;
-      }
-      #milestone-text {
-        font-size: 22px;
-        letter-spacing: 6px;
-      }
-      #swipe-hint {
-        font-size: 22px;
-        gap: 40px;
-        bottom: 24%;
-      }
-      #info {
-        bottom: 12%;
-      }
+      #record-wrapper { width: 340px; height: 340px; }
+      #timer { font-size: 72px; letter-spacing: 8px; }
+      #record-label { width: 85px; height: 85px; }
+      #label-text { font-size: 10px; letter-spacing: 4px; }
+      #label-text small { font-size: 6px; letter-spacing: 3px; }
+      #record-label::before { width: 8px; height: 8px; }
+      #track-name { font-size: 15px; letter-spacing: 2px; }
+      #track-source { font-size: 10px; }
+      #timer-dots { gap: 8px; }
+      .dot { width: 6px; height: 6px; }
+      #progress-ring circle { stroke-width: 1; }
+      #milestone-text { font-size: 22px; letter-spacing: 6px; }
+      #swipe-hint { font-size: 22px; gap: 40px; bottom: 24%; }
+      #info { bottom: 12%; }
       @keyframes ripple-expand {
         0% { width: 0; height: 0; }
         100% { width: 700px; height: 700px; }
       }
     }
-
     @media (max-width: 420px) {
-      #record-wrapper {
-        width: 260px;
-        height: 260px;
-      }
-      #timer {
-        font-size: 52px;
-        letter-spacing: 6px;
-      }
-      #record-label {
-        width: 65px;
-        height: 65px;
-      }
-      #label-text {
-        font-size: 8px;
-        letter-spacing: 3px;
-      }
-      #label-text small {
-        font-size: 5px;
-        letter-spacing: 2px;
-      }
-      #record-label::before {
-        width: 6px;
-        height: 6px;
-      }
-      #track-name {
-        font-size: 13px;
-        letter-spacing: 2px;
-      }
-      #track-source {
-        font-size: 9px;
-      }
-      #timer-dots {
-        gap: 6px;
-        margin-top: 16px;
-      }
-      .dot {
-        width: 5px;
-        height: 5px;
-      }
-      #progress-ring circle {
-        stroke-width: 0.8;
-      }
-      #milestone-text {
-        font-size: 18px;
-        letter-spacing: 5px;
-      }
-      #swipe-hint {
-        font-size: 18px;
-        gap: 30px;
-        bottom: 22%;
-      }
-      #info {
-        bottom: 10%;
-      }
-      #track-index {
-        font-size: 9px;
-      }
-      #help-tip {
-        font-size: 9px;
-        bottom: 3%;
-      }
+      #record-wrapper { width: 260px; height: 260px; }
+      #timer { font-size: 52px; letter-spacing: 6px; }
+      #record-label { width: 65px; height: 65px; }
+      #label-text { font-size: 8px; letter-spacing: 3px; }
+      #label-text small { font-size: 5px; letter-spacing: 2px; }
+      #record-label::before { width: 6px; height: 6px; }
+      #track-name { font-size: 13px; letter-spacing: 2px; }
+      #track-source { font-size: 9px; }
+      #timer-dots { gap: 6px; margin-top: 16px; }
+      .dot { width: 5px; height: 5px; }
+      #progress-ring circle { stroke-width: 0.8; }
+      #milestone-text { font-size: 18px; letter-spacing: 5px; }
+      #swipe-hint { font-size: 18px; gap: 30px; bottom: 22%; }
+      #info { bottom: 10%; }
+      #track-index { font-size: 9px; }
+      #help-tip { font-size: 9px; bottom: 3%; }
       @keyframes ripple-expand {
         0% { width: 0; height: 0; }
         100% { width: 500px; height: 500px; }
@@ -796,44 +552,30 @@
     </div>
 
     <div id="cosmic-dots"></div>
-
     <div id="ripple-container"></div>
-
     <div id="pulse-glow"></div>
-
     <div id="milestone-text"></div>
-
     <div id="audio-error"></div>
-
     <div id="swipe-hint">〈  〉</div>
 
     <div id="record-wrapper">
       <div id="record">
         <div id="record-shine"></div>
-        
         <div id="progress-ring">
           <svg width="100%" height="100%" viewBox="0 0 452 452">
             <circle cx="226" cy="226" r="210" />
             <circle class="progress-circle" cx="226" cy="226" r="210" />
           </svg>
         </div>
-
         <div id="tonearm"></div>
-
         <div id="record-label">
-          <span id="label-text">
-            三径
-            <small>sanjing</small>
-          </span>
+          <span id="label-text">三径<small>sanjing</small></span>
         </div>
-
         <div id="timer-wrapper">
           <div id="timer">00:00</div>
           <div id="timer-dots">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span>
             <span class="dot"></span>
           </div>
         </div>
@@ -845,26 +587,25 @@
       <span id="track-name">回首向来萧瑟处，归去，也无风雨也无晴。</span>
       <span id="track-source">—— 苏轼《定风波》</span>
     </div>
-
     <div id="help-tip">点击任意处 播放/暂停 · 滑动唱片换歌</div>
   </div>
 
   <script>
     // =============================================
-    // 音乐数据（2 首，每首 20 分钟）
+    // 音乐数据（m4a 格式）
     // =============================================
     const MONTHLY_TRACKS = [
       { 
         id: 1, 
         title: "回首向来萧瑟处，归去，也无风雨也无晴。",
         source: "—— 苏轼《定风波》",
-        url: "music/track-01.mp3"
+        url: "music/track-01.m4a"
       },
       { 
         id: 2, 
         title: "长风破浪会有时，直挂云帆济沧海。",
         source: "—— 李白《行路难》",
-        url: "music/track-02.mp3"
+        url: "music/track-02.m4a"
       }
     ];
 
@@ -940,13 +681,12 @@
     generateCosmicDots();
 
     // =============================================
-    // 宇宙模式（10分钟触发）
+    // 宇宙模式
     // =============================================
     function triggerCosmicMode(minute) {
       if (navigator.vibrate) {
         navigator.vibrate([30, 50, 20, 50, 40]);
       }
-
       for (let i = 0; i < 4; i++) {
         const ripple = document.createElement('div');
         if (i === 0) ripple.className = 'ripple';
@@ -956,7 +696,6 @@
         rippleContainer.appendChild(ripple);
         setTimeout(() => ripple.remove(), 4000);
       }
-
       pulseGlow.classList.remove('active');
       void pulseGlow.offsetWidth;
       pulseGlow.classList.add('active');
@@ -966,19 +705,14 @@
       const msg = MILESTONE_MESSAGES[msgIndex] || `—— ${minute} 分钟 ——`;
       milestoneText.textContent = msg;
       milestoneText.className = 'show';
-      setTimeout(() => {
-        milestoneText.className = 'hide';
-      }, 3000);
+      setTimeout(() => { milestoneText.className = 'hide'; }, 3000);
 
       app.classList.add('cosmic-mode');
-
       if (cosmicTimeout) clearTimeout(cosmicTimeout);
       cosmicTimeout = setTimeout(() => {
         app.classList.remove('cosmic-mode');
         cosmicTimeout = null;
       }, 10000);
-
-      console.log(`🌌 宇宙模式已触发 (${minute}分钟)，持续10秒`);
     }
 
     function formatTime(sec) {
@@ -1080,9 +814,8 @@
       audio.volume = volumeLevel;
       audio.loop = false;
 
-      // 监听加载错误
       audio.onerror = function() {
-        audioErrorEl.textContent = '⚠️ 音乐文件加载失败\n请检查 music/ 文件夹是否有 track-01.mp3 和 track-02.mp3';
+        audioErrorEl.textContent = '⚠️ 音乐加载失败\n请检查 music/ 文件夹是否有 track-01.m4a 和 track-02.m4a';
         audioErrorEl.classList.add('show');
         console.error('❌ 音频加载失败:', track.url);
       };
@@ -1100,12 +833,8 @@
 
       resetTimer();
 
-      // 如果当前是播放状态，自动播放
       if (isPlaying) {
-        audio.play().catch((e) => {
-          console.log('⚠️ 自动播放被阻止，等待用户手势');
-          // iOS 需要用户手势，这里不处理，用户点击时会触发
-        });
+        audio.play().catch(e => console.log('等待用户手势'));
         startTimer();
         record.style.animationPlayState = 'running';
       }
@@ -1121,17 +850,22 @@
     }
 
     // =============================================
-    // 播放/暂停（核心修复：用户手势激活音频）
+    // 播放/暂停
     // =============================================
     function togglePlay() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      } catch(e) {}
+
       if (isPlaying) {
-        // 暂停
         audio.pause();
         isPlaying = false;
         stopTimer();
         record.style.animationPlayState = 'paused';
       } else {
-        // 播放 - 用用户手势激活
         audio.play().then(() => {
           isPlaying = true;
           startTimer();
@@ -1139,23 +873,20 @@
           audioErrorEl.classList.remove('show');
           console.log('▶️ 播放成功');
         }).catch((e) => {
-          console.log('⚠️ 播放失败:', e.message);
-          audioErrorEl.textContent = '⚠️ 无法播放音乐，请检查文件是否存在';
+          audioErrorEl.textContent = '⚠️ 播放失败: ' + e.message;
           audioErrorEl.classList.add('show');
+          console.error('❌ 播放失败:', e.message);
         });
       }
     }
 
     function goToNext() {
-      if (MONTHLY_TRACKS.length === 0) return;
       if (currentIndex >= MONTHLY_TRACKS.length - 1) return;
-      
       audio.pause();
       isPlaying = false;
       stopTimer();
       currentIndex++;
       loadTrack(currentIndex, true);
-      // 自动播放
       audio.play().catch(() => {});
       isPlaying = true;
       startTimer();
@@ -1163,9 +894,7 @@
     }
 
     function goToPrev() {
-      if (MONTHLY_TRACKS.length === 0) return;
       if (currentIndex <= 0) return;
-      
       audio.pause();
       isPlaying = false;
       stopTimer();
@@ -1178,7 +907,7 @@
     }
 
     // =============================================
-    // 点击页面任意处 = 播放/暂停
+    // 点击事件
     // =============================================
     app.addEventListener('click', function(e) {
       if (hasSwiped) {
@@ -1216,46 +945,31 @@
       if (!isDragging) return;
       isDragging = false;
       wrapper.classList.remove('swiping');
-      
       const delta = currentX - startX;
-      
-      if (delta < -SWIPE_THRESHOLD) {
-        if (currentIndex < MONTHLY_TRACKS.length - 1) {
-          wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          wrapper.style.transform = 'translateX(-40px) rotate(-2deg)';
-          setTimeout(() => {
-            goToNext();
-            wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            wrapper.style.transform = 'translateX(0) rotate(0deg)';
-            record.style.transform = 'rotate(0deg)';
-          }, 300);
-        } else {
-          wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+      if (delta < -SWIPE_THRESHOLD && currentIndex < MONTHLY_TRACKS.length - 1) {
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        wrapper.style.transform = 'translateX(-40px) rotate(-2deg)';
+        setTimeout(() => {
+          goToNext();
+          wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
-        }
-      } else if (delta > SWIPE_THRESHOLD) {
-        if (currentIndex > 0) {
-          wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          wrapper.style.transform = 'translateX(40px) rotate(2deg)';
-          setTimeout(() => {
-            goToPrev();
-            wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            wrapper.style.transform = 'translateX(0) rotate(0deg)';
-            record.style.transform = 'rotate(0deg)';
-          }, 300);
-        } else {
-          wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        }, 300);
+      } else if (delta > SWIPE_THRESHOLD && currentIndex > 0) {
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        wrapper.style.transform = 'translateX(40px) rotate(2deg)';
+        setTimeout(() => {
+          goToPrev();
+          wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
-        }
+        }, 300);
       } else {
         wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
         wrapper.style.transform = 'translateX(0) rotate(0deg)';
         record.style.transform = 'rotate(0deg)';
-        if (!hasSwiped) {
-          togglePlay();
-        }
+        if (!hasSwiped) togglePlay();
         hasSwiped = false;
       }
     }, { passive: true });
@@ -1289,60 +1003,43 @@
       if (!mouseDown) return;
       mouseDown = false;
       wrapper.classList.remove('swiping');
-      
       const delta = mouseCurrentX - mouseStartX;
-      
-      if (delta < -SWIPE_THRESHOLD) {
-        if (currentIndex < MONTHLY_TRACKS.length - 1) {
-          wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          wrapper.style.transform = 'translateX(-40px) rotate(-2deg)';
-          setTimeout(() => {
-            goToNext();
-            wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            wrapper.style.transform = 'translateX(0) rotate(0deg)';
-            record.style.transform = 'rotate(0deg)';
-          }, 300);
-        } else {
-          wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+      if (delta < -SWIPE_THRESHOLD && currentIndex < MONTHLY_TRACKS.length - 1) {
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        wrapper.style.transform = 'translateX(-40px) rotate(-2deg)';
+        setTimeout(() => {
+          goToNext();
+          wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
-        }
-      } else if (delta > SWIPE_THRESHOLD) {
-        if (currentIndex > 0) {
-          wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          wrapper.style.transform = 'translateX(40px) rotate(2deg)';
-          setTimeout(() => {
-            goToPrev();
-            wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            wrapper.style.transform = 'translateX(0) rotate(0deg)';
-            record.style.transform = 'rotate(0deg)';
-          }, 300);
-        } else {
-          wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        }, 300);
+      } else if (delta > SWIPE_THRESHOLD && currentIndex > 0) {
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        wrapper.style.transform = 'translateX(40px) rotate(2deg)';
+        setTimeout(() => {
+          goToPrev();
+          wrapper.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
           wrapper.style.transform = 'translateX(0) rotate(0deg)';
           record.style.transform = 'rotate(0deg)';
-        }
+        }, 300);
       } else {
         wrapper.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
         wrapper.style.transform = 'translateX(0) rotate(0deg)';
         record.style.transform = 'rotate(0deg)';
-        if (!hasSwiped) {
-          togglePlay();
-        }
+        if (!hasSwiped) togglePlay();
         hasSwiped = false;
       }
     });
 
-    // =============================================
-    // 音乐播放结束 → 自动暂停（不自动切歌）
-    // =============================================
+    // 音乐播放结束
     audio.addEventListener('ended', function() {
       isPlaying = false;
       stopTimer();
       record.style.animationPlayState = 'paused';
       trackNameEl.classList.add('show');
       trackSourceEl.classList.add('show');
-      console.log('🎵 音乐播放结束，已自动暂停');
+      console.log('🎵 音乐播放结束');
     });
 
     // ===== 启动 =====
@@ -1355,7 +1052,8 @@
     }
 
     console.log('📱 三径 · 私人音乐已加载');
-    console.log('🎵 请点击屏幕播放音乐');
+    console.log('🎵 当前使用本地音乐: music/track-01.m4a, music/track-02.m4a');
+    console.log('📌 如果听不到声音，请检查文件是否存在');
   </script>
 </body>
 </html>
